@@ -42,3 +42,21 @@ export class ForbiddenError extends Error {
         this.name = "ForbiddenError";
     }
 }
+
+export class BadRequestError extends Error {
+    constructor(message) {
+        super(message);
+        this.status = 400;
+        this.message = message;
+        this.name = "BadRequestError";
+    }
+}
+
+export class RouteLoadError extends Error {
+    constructor(message) {
+        super(message);
+        this.status = 500;
+        this.message = message;
+        this.name = "RouteLoadError";
+    }
+}

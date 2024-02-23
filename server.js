@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import errorsHandler from "./src/middleware/errorsHandler.js";
 import fs from "fs";
+import { RouteLoadError } from "./src/utils/errors.js";
 const baseDir = process.cwd();
 
 const port = process.env.PORT || 3000;
@@ -69,7 +70,12 @@ async function registerModulesRoutes(app, moduleDirectory) {
   }
 }
 
-registerModulesRoutes(app, "./src/modules");
+try {
+  registerModulesRoutes(app, "./src/modules");
+} catch (error) {
+  throw RouteLoadError(error);
+}
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

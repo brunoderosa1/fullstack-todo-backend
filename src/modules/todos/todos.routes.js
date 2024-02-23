@@ -7,6 +7,10 @@ todosRouter.get("/", (req, res) => {
     res.json({ message: "Hello from todos!" });
 });
 
+todosRouter.get("/:id", (req, res) => {
+    res.json({ message: "Hello from todos!" });
+});
+
 export default function (app) {
     app.use('/todos', todosRouter);
 }
