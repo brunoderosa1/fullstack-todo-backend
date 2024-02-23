@@ -7,6 +7,8 @@ authRouter.get("/", (req, res) => {
     res.json({ message: "Hello from auth!" });
 });
 
+
+
 export default function (app) {
     app.use('/auth', authRouter);
 }
