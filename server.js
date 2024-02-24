@@ -1,4 +1,6 @@
 import express from "express";
+import bodyParser from "body-parser";
+
 import errorsHandler from "./src/middleware/errorsHandler.js";
 import {
     DbError,
@@ -6,6 +8,7 @@ import {
     UnauthorizedError,
 } from "./src/utils/errors.js";
 import registerModulesRoutes from "./src/utils/RegisterModulesRoutes.js";
+
 
 import { initializeApp, cert } from "firebase-admin/app";
 import { tryCatch } from "./src/utils/TryCatch.js";
@@ -16,10 +19,14 @@ initializeApp({
 
 const port = process.env.PORT || 3000;
 
+const ROUTE_TO_MODULES = './src/modules';
+
 const app = express();
 
+app.use(bodyParser.json());
+
 try {
-    await registerModulesRoutes(app, "./src/modules");
+    await registerModulesRoutes(app, ROUTE_TO_MODULES);
 } catch (error) {
     throw new RouteLoadError(error.message);
 }

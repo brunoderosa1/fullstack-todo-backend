@@ -1,6 +1,6 @@
 // auth.routes.js
 import { Router } from "express";
-import {login, signup, logout, forgotPassword } from "./auth.controllers.js";
+import { login, signup, logout } from "./auth.controllers.js";
 import { tryCatch } from "../../utils/TryCatch.js";
 
 const authRouter = Router();
@@ -9,14 +9,12 @@ authRouter.get("/", (req, res) => {
     res.json({ message: "Hello from auth!" });
 });
 
-authRouter.post("/login", await tryCatch(login) );
+authRouter.post("/login", tryCatch(login));
 
-authRouter.post("/signup", await tryCatch(signup));
+authRouter.post("/signup", tryCatch(signup));
 
-authRouter.post("/logout", await tryCatch(logout));
-
-authRouter.post("/forgot-password", await tryCatch(forgotPassword));
+authRouter.post("/logout", tryCatch(logout));
 
 export default function (app) {
-    app.use('/auth', authRouter);
+    app.use("/auth", authRouter);
 }

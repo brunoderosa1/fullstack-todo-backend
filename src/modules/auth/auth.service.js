@@ -1,11 +1,11 @@
-import authService from "../../lib/auth";
+import { authService } from "../../lib/auth.js";
 
 export async function login(email, password) {
-    return await authService.login(email, password);
+    return authService.login(email, password);
 }
 
 export async function signup(email, password) {
-    return await authService.signup(email, password);
+    return authService.signup(email, password);
 }
 
 export async function logout(token) {

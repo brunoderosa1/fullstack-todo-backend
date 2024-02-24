@@ -1,5 +1,5 @@
 import { getAuth } from "firebase-admin/auth";
-import { AuthenticationError } from "../utils/errors";
+import { AuthenticationError } from "../utils/errors.js";
 class AuthService {
     constructor() {
         this.user = null;
@@ -48,6 +48,4 @@ class AuthService {
     }
 }
 
-const authService = new AuthService();
-
-export default authService;
+export const authService = new AuthService();

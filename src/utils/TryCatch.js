@@ -10,12 +10,11 @@
  * provided parameters. If an error occurs during the execution of the `controller` function, it
  * catches the error and passes it to the `next` function.
  */
-export async function tryCatch (controller) {
-    return async (req, res, next) => {
-        try {
-            await controller(req, res, next);
-        } catch (error) {
-            next(error);
-        }
+export const tryCatch = (controller) => async (req, res, next) => {
+    try {
+        await controller(req, res, next);
+    } catch (error) {
+        return next(error);
     }
-}
+};
+    

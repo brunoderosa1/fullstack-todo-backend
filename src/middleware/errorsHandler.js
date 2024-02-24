@@ -22,7 +22,7 @@
  * status code 500 will be returned containing the `message` property of the `err` object.
  */
 export default function errorsHandler(err, req, res, next) {
-    console.log('error handler invoked');
+    console.log("🚀 ~ errorsHandler ~ err:", err)
     if (err.name && err.status && err.message) {
         return res.status(err.status).json({ message: err.message, name: err.name, stack: err.stack, status: err.status });
     }

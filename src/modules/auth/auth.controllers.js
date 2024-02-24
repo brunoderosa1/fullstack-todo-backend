@@ -1,20 +1,20 @@
-import { login, signup, logout } from "./auth.service.js";
+import * as authService from "./auth.service.js";
 
-export async function login(req, res) {
+export const login = async (req, res, next) => {
     const { email, password } = req.body;
-    const token = await login(email, password);
+    const token = await authService.login(email, password);
     res.json({ token });
 }
 
-export async function signup(req, res) {
+export const signup = async(req, res, next) => {
     const { email, password } = req.body;
-    const token = await signup(email, password);
+    const token = await authService.signup(email, password);
     res.json({ token });
 }
 
-export async function logout(req, res) {
+export const logout = async (req, res, next) => {
     const { token } = req.body;
-    const result = await logout(token);
+    const result = await authService.logout(token);
     res.json({ result });
 }
 
