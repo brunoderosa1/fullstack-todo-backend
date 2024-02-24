@@ -1,8 +1,4 @@
-import * as admin from "firebase-admin";
-
-admin.initializeApp({
-  credential: admin.credential.cert('../credentials.json'),
-});
+import { getAuth } from "firebase-admin/auth";
 
 async function getAuthToken(req) {
     const authHeader = req.headers.authorization;
@@ -11,7 +7,7 @@ async function getAuthToken(req) {
     }
     const token = authHeader.split(" ")[1];
     try {
-        const decodedToken = await admin.auth().verifyIdToken(token);
+        const decodedToken = await getAuth().verifyIdToken(token);
         return decodedToken;
     } catch (e) {
         throw new Error("Auth token is not valid");
