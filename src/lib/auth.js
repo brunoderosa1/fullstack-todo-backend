@@ -1,26 +1,23 @@
 import { getAuth } from "firebase-admin/auth";
-import { initializeApp, cert } from "firebase-admin/app";
-
-const app = initializeApp({
-    credential: cert("../credentials.json"),
-});
-
-
+import { AuthenticationError } from "../utils/errors";
 class AuthService {
+    constructor() {
+        this.user = null;
+    }
+
     async login(email, password) {
         const user = await getAuth().getUserByEmail(email);
         if (!user) {
-            throw new Error("User not found");
+            throw new AuthenticationError("Email not found");
         }
         const userRecord = await getAuth().getUser(user.uid);
         if (!userRecord) {
-            throw new Error("User not found");
+            throw new AuthenticationError("User not found");
         }
-        const validPassword = await admin
-            .getAuth()
+        const validPassword = await getAuth()
             .verifyPassword(userRecord, password);
         if (!validPassword) {
-            throw new Error("Invalid password");
+            throw new AuthenticationError("Invalid password");
         }
         const token = await getAuth().createCustomToken(userRecord.uid);
         return token;
@@ -32,7 +29,7 @@ class AuthService {
             password,
         });
         if (!user) {
-            throw new Error("User not created");
+            throw new AuthenticationError("User not created");
         }
         const token = await getAuth().createCustomToken(user.uid);
         return token;
@@ -50,3 +47,7 @@ class AuthService {
         return decodedToken;
     }
 }
+
+const authService = new AuthService();
+
+export default authService;

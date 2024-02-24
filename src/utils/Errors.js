@@ -60,3 +60,12 @@ export class RouteLoadError extends Error {
         this.name = "RouteLoadError";
     }
 }
+
+export class AuthenticationError extends Error {
+    constructor(message) {
+        super(message);
+        this.status = 401;
+        this.message = message;
+        this.name = "AuthenticationError";
+    }
+}

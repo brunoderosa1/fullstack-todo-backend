@@ -7,6 +7,13 @@ import {
 } from "./src/utils/errors.js";
 import registerModulesRoutes from "./src/utils/RegisterModulesRoutes.js";
 
+import { initializeApp, cert } from "firebase-admin/app";
+import { tryCatch } from "./src/utils/TryCatch.js";
+
+initializeApp({
+    credential: cert("./credentials.json"),
+});
+
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -17,15 +24,9 @@ try {
     throw new RouteLoadError(error.message);
 }
 
-app.get("/", (req, res, next) => {
-    try {
-      
-      throw new UnauthorizedError("Not authorized");
-    } catch (error) {
-      return next(error)
-    }
+app.get("/", await tryCatch((req, res, next) => {
     res.send("Hello World!");
-});
+}));
 
 app.use(errorsHandler);
 

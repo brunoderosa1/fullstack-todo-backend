@@ -17,7 +17,7 @@ model Todo {
   id        Int      @default(autoincrement()) @id
   title     String
   completed Boolean
-  userId    Int?
+  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
