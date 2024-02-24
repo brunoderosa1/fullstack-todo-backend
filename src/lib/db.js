@@ -5,7 +5,7 @@ if (!global.prisma) {
 }
 export const prisma = global.prisma;
 
-export const getTodos = async (userId) => {
+export const getAllTodos = async (userId) => {
     return prisma.todo.findMany({
         where: {
             userId,
@@ -16,7 +16,7 @@ export const getTodos = async (userId) => {
     });
 };
 
-export const getTodo = async (userId, id) => {
+export const getIndividualTodo = async (userId, id) => {
     return prisma.todo.findUnique({
         where: {
             userId,
@@ -28,7 +28,7 @@ export const getTodo = async (userId, id) => {
     });
 };
 
-export const createTodo = async (userId, data) => {
+export const createIndividualTodo = async (userId, data) => {
     return prisma.todo.create({
         data: {
             ...data,
@@ -40,7 +40,7 @@ export const createTodo = async (userId, data) => {
     });
 };
 
-export const updateTodo = async (userId, id, data) => {
+export const updateIndividualTodo = async (userId, id, data) => {
     return prisma.todo.update({
         where: {
             userId,
@@ -53,7 +53,7 @@ export const updateTodo = async (userId, id, data) => {
     });
 };
 
-export const deleteTodo = async (userId, id) => {
+export const deleteIndividualTodo = async (userId, id) => {
     return prisma.todo.delete({
         where: {
             userId,

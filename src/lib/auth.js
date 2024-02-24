@@ -2,7 +2,7 @@ import { getAuth } from "firebase-admin/auth";
 import { AuthenticationError } from "../utils/errors.js";
 class AuthService {
     constructor() {
-        this.user = null;
+        this.user = null;      
     }
 
     async login(email, password) {
