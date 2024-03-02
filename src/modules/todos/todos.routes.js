@@ -9,13 +9,15 @@ todosRouter.get("/", (req, res) => {
     res.json({ message: "Hello from todos!" });
 });
 
-todosRouter.get("/:id", tryCatch(todosControllers.getTodo));;
+todosRouter.get("/:id", await tryCatch(todosControllers.getTodo));
 
-todosRouter.post("/create", tryCatch(todosControllers.createTodo));
+todosRouter.post("/create", await tryCatch(todosControllers.createTodo));
 
-todosRouter.put("/:id", tryCatch(todosControllers.updateTodo));
+todosRouter.put("/:id", await tryCatch(todosControllers.updateTodo));
 
-todosRouter.delete("/:id", tryCatch(todosControllers.deleteTodo));
+todosRouter.delete("/:id", await tryCatch(todosControllers.deleteTodo));
+
+todosRouter.get("/all", await tryCatch(todosControllers.getTodos));
 
 export default function (app) {
     app.use('/todos', todosRouter);

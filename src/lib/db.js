@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
-if (!global.prisma) {
-    global.prisma = new PrismaClient();
+if (!globalThis.prisma) {
+    globalThis.prisma = new PrismaClient();
 }
-export const prisma = global.prisma;
+export const prisma = globalThis.prisma;
 
-export const getAllTodos = async (userId) => {
-    return prisma.todo.findMany({
+export async function getAllTodos(userId) {
+    return await prisma.todo.findMany({
         where: {
             userId,
         },
@@ -16,51 +16,51 @@ export const getAllTodos = async (userId) => {
     });
 };
 
-export const getIndividualTodo = async (userId, id) => {
-    return prisma.todo.findUnique({
+export async function getIndividualTodo (userId, id) {
+    return await prisma.todo.findUnique({
         where: {
             userId,
-            id
+            id,
         },
         include: {
             userId: true,
-        }
+        },
     });
 };
 
-export const createIndividualTodo = async (userId, data) => {
-    return prisma.todo.create({
+export async function createIndividualTodo (userId, data) {
+    return await prisma.todo.create({
         data: {
             ...data,
-            userId
+            userId,
         },
         include: {
             userId: true,
-        }
+        },
     });
 };
 
-export const updateIndividualTodo = async (userId, id, data) => {
-    return prisma.todo.update({
+export async function updateIndividualTodo (userId, id, data) {
+    return await prisma.todo.update({
         where: {
             userId,
-            id
+            id,
         },
         data,
         include: {
             userId: true,
-        }
+        },
     });
 };
 
-export const deleteIndividualTodo = async (userId, id) => {
-    return prisma.todo.delete({
+export async function deleteIndividualTodo (userId, id) {
+    return await prisma.todo.delete({
         where: {
             userId,
-            id
+            id,
         },
         include: {
             userId: true,
-        }
+        },
     });
 };

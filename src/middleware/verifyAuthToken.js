@@ -1,7 +1,8 @@
 import { getAuth } from "firebase-admin/auth";
-import { UnauthorizedError } from "../utils/errors";
+import { UnauthorizedError } from "../utils/Errors.js";
+import { auth } from "../lib/firebase.js";
 
-export async function verifyAuthToken(req, res, next) {
+export default async function verifyAuthToken(req, res, next) {
     try {
         const authHeader = req.headers["authorization"];
         if (!authHeader) {
@@ -11,8 +12,9 @@ export async function verifyAuthToken(req, res, next) {
         if (!token) {
             throw new UnauthorizedError("No token");
         }
-        const decodedToken = await getAuth().verifyIdToken(token);
+        const decodedToken = await auth.verifyIdToken(token);
         req.user = decodedToken;
+        next()
     } catch (error) {
         next(error);
     }

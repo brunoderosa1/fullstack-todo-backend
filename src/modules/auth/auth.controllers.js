@@ -1,4 +1,4 @@
-import { BadRequestError } from "../../utils/errors.js";
+import { BadRequestError } from "../../utils/Errors.js";
 import * as authService from "./auth.service.js";
 
 // export const login = async (req, res, next) => {

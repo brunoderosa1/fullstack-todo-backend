@@ -11,9 +11,9 @@ authRouter.get("/", (req, res) => {
 
 // authRouter.post("/login", tryCatch(login));
 
-authRouter.post("/signup", tryCatch(signup));
+// authRouter.post("/signup", tryCatch(signup));
 
-authRouter.post("/logout", tryCatch(logout));
+// authRouter.post("/logout", tryCatch(logout));
 
 export default function (app) {
     app.use("/auth", authRouter);
