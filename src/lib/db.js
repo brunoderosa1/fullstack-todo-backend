@@ -10,46 +10,34 @@ export async function getAllTodos(userId) {
         where: {
             userId,
         },
-        include: {  
-            userId: true,
-        }
     });
 };
 
-export async function getIndividualTodo (userId, id) {
+export async function getIndividualTodo(userId, id) {
     return await prisma.todo.findUnique({
         where: {
             userId,
             id,
-        },
-        include: {
-            userId: true,
-        },
+        }
     });
 };
 
-export async function createIndividualTodo (userId, data) {
+export async function createIndividualTodo(userId, data) {
     return await prisma.todo.create({
         data: {
             ...data,
             userId,
         },
-        include: {
-            userId: true,
-        },
     });
 };
 
-export async function updateIndividualTodo (userId, id, data) {
+export async function updateIndividualTodo(userId, id, data) {
     return await prisma.todo.update({
         where: {
             userId,
             id,
         },
         data,
-        include: {
-            userId: true,
-        },
     });
 };
 
@@ -58,9 +46,6 @@ export async function deleteIndividualTodo (userId, id) {
         where: {
             userId,
             id,
-        },
-        include: {
-            userId: true,
         },
     });
 };

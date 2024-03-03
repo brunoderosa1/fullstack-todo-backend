@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Todo" ALTER COLUMN "completed" DROP NOT NULL,
+ALTER COLUMN "updatedAt" DROP NOT NULL;

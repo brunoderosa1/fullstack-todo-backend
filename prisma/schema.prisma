@@ -16,8 +16,9 @@ datasource db {
 model Todo {
   id        Int      @default(autoincrement()) @id
   title     String
-  completed Boolean
+  completed Boolean?
+  description String
   userId    String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
 }

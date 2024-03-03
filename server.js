@@ -6,10 +6,8 @@ import morgan from "morgan";
 import errorsHandler from "./src/middleware/errorsHandler.js";
 import verifyAuthToken from "./src/middleware/verifyAuthToken.js";
 import {
-    DbError,
     RouteLoadError,
-    UnauthorizedError,
-} from "./src/utils/errors.js";
+} from "./src/utils/Errors.js";
 import registerModulesRoutes from "./src/utils/RegisterModulesRoutes.js";
 
 
