@@ -4,6 +4,7 @@ import { auth } from "../lib/firebase.js";
 
 export default async function verifyAuthToken(req, res, next) {
     try {
+        if (req.path === '/') return next();
         const authHeader = req.headers["authorization"];
         if (!authHeader) {
             throw new UnauthorizedError("No authorization header");
