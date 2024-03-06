@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "test": "vitest",
-        "dev": "node --trace-warnings --inspect --watch --watch-preserve-output server.js "
+        "dev": "node --trace-warnings --inspect --watch --watch-preserve-output server.js ",
+        "postinstall": "prisma generate"
     },
     "keywords": [],
     "author": "",
