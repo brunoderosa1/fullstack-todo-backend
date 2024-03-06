@@ -14,11 +14,13 @@ COPY package*.json ./
 RUN npm ci
 
 # Generate Prisma client
-RUN npx prisma generate
+
+RUN npm i -g prisma
 
 # Copy the rest of the source files into the image.
 COPY . .
+RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["node", "--watch", "server.js"]
+CMD ["node", "--trace-warnings", "--watch", "server.js"]
