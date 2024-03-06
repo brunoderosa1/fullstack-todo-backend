@@ -1,6 +1,5 @@
 // auth.routes.js
 import { Router } from "express";
-import { tryCatch } from "../../utils/TryCatch.js";
 import * as todosControllers from "./todos.controllers.js";
 
 const todosRouter = Router();

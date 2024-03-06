@@ -30,7 +30,7 @@ export async function createTodo(req, res, next) {
             title,
             description,
         });
-        return res.status(200).json({ data: [todo] });
+        return res.status(200).json({ data: todo });
     } catch (error) {
         next(new DbError(error.message));
     }
@@ -45,7 +45,7 @@ export async function updateTodo(req, res, next) {
             title,
             description,
         });
-        return res.status(200).json({ data: [todo] });
+        return res.status(200).json({ data: todo });
     } catch (error) {
         next(new DbError(error.message));
     }
@@ -55,8 +55,8 @@ export async function deleteTodo(req, res, next) {
     const userId = req.user.user_id;
     const { id } = req.params;
     try {
-        const result = await todosServices.deleteTodo(userId, parseInt(id));
-        return res.status(200).json({ data: [result] });
+        const todo = await todosServices.deleteTodo(userId, parseInt(id));
+        return res.status(200).json({ data: todo });
     } catch (error) {
         next(new DbError(error.message));
     }

@@ -11,9 +11,9 @@
  * catches the error and passes it to the `next` function.
  */
 export async function tryCatch(controller) {
-    return async (req, res) => {
+    return async (req, res, next) => {
         try {
-            await controller(req, res);
+            await controller(req, res, next);
         } catch (error) {
             return next(error);
         }

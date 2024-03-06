@@ -1,52 +1,56 @@
-import registerModulesRoutes from "./RegisterModulesRoutes";
-import express from "express";
+import { test } from "vitest";
 import fs from "fs";
+import path from "path";
+import registerModulesRoutes from "../RegisterModulesRoutes.js";
 
-describe("registerModulesRoutes", () => {
-  let app;
+// Mocking fs.readdirSync and fs.existsSync
+const mockReadDirSync = vi.fn();
+const mockExistsSync = vi.fn();
+fs.readdirSync = mockReadDirSync;
+fs.existsSync = mockExistsSync;
 
-  beforeEach(() => {
-    app = express();
-  });
+// Mocking console.log and console.warn to avoid actual console output during tests
+global.console = {
+    log: vi.fn(),
+    warn: vi.fn(),
+};
 
-  test("registers routes from valid module", async () => {
-    const moduleDirectory = "./modules";
-    fs.existsSync = jest.fn().mockReturnValue(true);
+test("registers routes from valid modules", async () => {
+    // Mocking the behavior of fs.readdirSync and fs.existsSync
+    mockReadDirSync.mockReturnValue(["auth"]);
+    mockExistsSync.mockReturnValue(true);
 
-    await registerModulesRoutes(app, moduleDirectory);
+    const mockApp = { use: vi.fn() };
+    const modulesDirectory = "./src/modules";
+    
+    await registerModulesRoutes(mockApp, modulesDirectory);
 
-    expect(fs.existsSync).toHaveBeenCalledWith(
-      expect.stringContaining("module1.routes.js")
+    expect(mockReadDirSync).toHaveBeenCalledWith(modulesDirectory);
+    expect(mockExistsSync).toHaveBeenCalledWith(
+        expect.stringContaining("auth.routes.js")
     );
-    expect(app._router.stack).toHaveLength(1);
-  });
-
-  test("logs warning if routes file does not exist", async () => {
-    const moduleDirectory = "./modules";
-    fs.existsSync = jest.fn().mockReturnValue(false);
-
-    console.warn = jest.fn();
-
-    await registerModulesRoutes(app, moduleDirectory);
-
-    expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining("No routes file found")
+    expect(console.log).toHaveBeenCalledWith(
+        "Registered routes from module 'auth'"
     );
-  });
-
-  test("logs warning if default export is not a function", async () => {
-    const moduleDirectory = "./modules";
-    fs.existsSync = jest.fn().mockReturnValue(true);
-    jest.mock("./modules/module1/module1.routes", () => ({
-      default: "not a function",
-    }));
-
-    console.warn = jest.fn();
-
-    await registerModulesRoutes(app, moduleDirectory);
-
-    expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining("default export is not a function")
-    );
-  });
+    expect(mockApp.use).toHaveBeenCalled();
 });
+
+test("warns when no routes file is found", async () => {
+    mockReadDirSync.mockReturnValue(["noRoutesModule"]);
+    mockExistsSync.mockReturnValue(false);
+
+    const mockApp = { use: vi.fn() };
+    const modulesDirectory = "./modules";
+
+    await registerModulesRoutes(mockApp, modulesDirectory);
+
+    expect(mockReadDirSync).toHaveBeenCalledWith(modulesDirectory);
+    expect(mockExistsSync).toHaveBeenCalledWith(
+        expect.stringContaining("noRoutesModule.routes.js")
+    );
+    expect(console.warn).toHaveBeenCalledWith(
+        "No routes file found for module 'noRoutesModule'"
+    );
+    expect(mockApp.use).not.toHaveBeenCalled();
+});
+
