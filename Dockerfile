@@ -8,6 +8,8 @@ ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 
+COPY package*.json ./
+
 # Install dependencies, including Prisma CLI
 RUN npm ci
 
