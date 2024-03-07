@@ -21,6 +21,6 @@ RUN npm i -g prisma
 COPY . .
 RUN npx prisma generate
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD ["node", "--trace-warnings", "--watch", "server.js"]
