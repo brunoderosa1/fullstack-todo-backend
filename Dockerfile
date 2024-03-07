@@ -6,6 +6,8 @@ FROM node:${NODE_VERSION}-alpine
 
 ENV NODE_ENV production
 
+ENV PORT 8080
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -20,7 +22,5 @@ RUN npm i -g prisma
 # Copy the rest of the source files into the image.
 COPY . .
 RUN npx prisma generate
-
-EXPOSE 3000
 
 CMD ["node", "--trace-warnings", "--watch", "server.js"]
